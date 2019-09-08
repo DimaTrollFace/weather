@@ -3,7 +3,7 @@ function cookies (store) {
     return state.cityList
   }, (newVal) => {
     store._vm.$cookie.setCookie('cityList', newVal)
-  }, {deep: true})
+  }, { deep: true })
 }
 
 export {

@@ -10,9 +10,9 @@
 
 <script>
 
-import Header from "./components/Header/Index";
+import Header from './components/Header/Index'
 export default {
   name: 'App',
-  components: {Header}
-};
+  components: { Header }
+}
 </script>
