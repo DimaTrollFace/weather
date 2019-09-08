@@ -8,7 +8,7 @@ class Cookie {
   setCookie (name, value) {
     try {
       value = Cookie.encodeValue(value)
-      document.cookie = `${name}=${value}`
+      document.cookie = `${name}=${value}; path=/`
     } catch (e) {
       console.error(e)
     }
