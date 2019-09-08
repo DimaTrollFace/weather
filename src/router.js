@@ -14,8 +14,13 @@ export default new Router({
     },
     {
       path: '/cities',
-      name: 'about',
+      name: 'cities',
       component: () => import(/* webpackChunkName: "about" */ './pages/Cities/Index.vue')
+    },
+    {
+      path: '/cities/:cityID',
+      name: 'city',
+      component: () => import(/* webpackChunkName: "about" */ './pages/City/Index.vue')
     },
     {
       path: '/about',
