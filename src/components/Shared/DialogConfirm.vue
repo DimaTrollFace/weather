@@ -1,6 +1,7 @@
 <template>
   <v-dialog
     :value="visible"
+    max-width="300"
   >
     <v-card>
       <v-card-title>{{title}}</v-card-title>
