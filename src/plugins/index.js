@@ -1,9 +1,8 @@
 import axios from './axios'
 import helper from './helper'
 import cookie from './cookie'
-import Vue from 'vue'
 
-export default function () {
+export default function (Vue) {
   Vue.use(axios)
   Vue.use(helper)
   Vue.use(cookie)
