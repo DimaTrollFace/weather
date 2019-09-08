@@ -84,8 +84,8 @@ export default {
               this.forecastList = forecast.list
             })
         })
-        .catch(() => {
-          debugger;
+        .catch(err => {
+          this.$notify(err.message)
         })
     },
     initModel (city) {
