@@ -75,7 +75,8 @@ export default new Vuex.Store({
         .get(`${appUrl}/weather?lat=${lat}&lon=${lon}`)
         .then(response => response.data)
         .catch(err => {
-          this._vm.errorMessage(err.message)
+          let message = err.response.data.message || message
+          this._vm.errorMessage(message)
           throw err
         })
     },
@@ -84,7 +85,8 @@ export default new Vuex.Store({
         .get(`${appUrl}/weather?id=${cityID}`)
         .then(response => response.data)
         .catch(err => {
-          this._vm.errorMessage(err.message)
+          let message = err.response.data.message || message
+          this._vm.errorMessage(message)
           throw err
         })
     },
@@ -93,7 +95,8 @@ export default new Vuex.Store({
         .get(`${appUrl}/weather?q=${cityName}`)
         .then(response => response.data)
         .catch(err => {
-          this._vm.errorMessage(err.message)
+          let message = err.response.data.message || message
+          this._vm.errorMessage(message)
           throw err
         })
     },
@@ -104,7 +107,8 @@ export default new Vuex.Store({
           return response.data
         })
         .catch(err => {
-          this._vm.errorMessage(err.message)
+          let message = err.response.data.message || message
+          this._vm.errorMessage(message)
           throw err
         })
     },
