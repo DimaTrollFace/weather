@@ -12,7 +12,9 @@
       <v-col
         v-for="city in cityList"
         :key="city.id"
-        cols="3"
+        cols="12"
+        lg="4"
+        md="6"
       >
         <city-card
           v-bind="city"
