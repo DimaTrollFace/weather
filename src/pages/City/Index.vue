@@ -2,6 +2,11 @@
   <v-container>
     <v-row>
       <v-col>
+        <v-btn @click="goToCities">Back</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
         <full-city-info
           v-if="isInit"
           v-bind="city"
@@ -46,6 +51,9 @@ export default {
     }
   },
   methods: {
+    goToCities () {
+      this.$router.push({ name: 'cities' })
+    },
     addCityToList () {
       this.addNewCity(this.city)
     },
