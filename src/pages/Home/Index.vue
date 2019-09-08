@@ -35,7 +35,7 @@ export default {
   name: 'Home.vue',
   components: {
     'forecast-city-info': () => import('@/components/Shared/ForecastCityInfo.vue'),
-    'full-city-info': () => import('@/components/Shared/FullCityInfo.vue'),
+    'full-city-info': () => import('@/components/Shared/FullCityInfo.vue')
   },
   data: () => ({
     forecastList: []
@@ -56,7 +56,7 @@ export default {
   watch: {
     currentCity: {
       immediate: true,
-      handler(city) {
+      handler (city) {
         if (city) {
           this.getForecastByCityID(city.id)
             .then((forecast) => {
