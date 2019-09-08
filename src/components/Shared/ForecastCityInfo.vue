@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card v-if="todayList.length > 0">
     <v-card-title>Temperature for day</v-card-title>
     <v-card-text>
       <div class="list">
