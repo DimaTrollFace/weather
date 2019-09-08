@@ -6,7 +6,7 @@ export default function (app) {
     let citiesFromCookies = app.$cookie.getCookie('cityList')
     if (citiesFromCookies && Array.isArray(citiesFromCookies)) {
       citiesFromCookies.forEach((city) => {
-        app.$store.dispatch('addNewCity', city)
+        app.$store.dispatch('addCity', city)
       })
     }
   }
