@@ -13,6 +13,18 @@ export default {
             }, {})
           }
         }
+      },
+      errorMessage: {
+        get () {
+          return (text) => {
+            this.$notify({
+              group: 'foo',
+              title: 'Error message',
+              type: 'error',
+              text
+            })
+          }
+        }
       }
     })
   }
