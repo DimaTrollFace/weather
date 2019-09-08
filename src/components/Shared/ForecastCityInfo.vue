@@ -3,7 +3,7 @@
     <v-card-title>Temperature for day</v-card-title>
     <v-card-text>
       <div class="list">
-        <div v-for="item in todayList" class="list-item">
+        <div v-for="(item, i) in todayList" :key="i" class="list-item">
           <div class="item-data">{{item.date | filterHour}}</div>
           <div class="item-temp">{{item.temp | kelvinToCelsius | filterCelsius}}</div>
         </div>
@@ -16,13 +16,13 @@
 export default {
   name: 'ForecastCityInfo',
   props: {
-    list: { type: Array, default: () => ([])}
+    list: { type: Array, default: () => ([]) }
   },
   computed: {
     normalizedList () {
-      return this.list.map((data) => {
+      return this.list.map(data => {
         return {
-          date: new Date( +Date.parse(data.dt_txt + '.000Z')),
+          date: new Date(+Date.parse(data.dt_txt + '.000Z')),
           temp: data.main.temp
         }
       })
