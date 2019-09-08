@@ -4,6 +4,7 @@
     <v-content>
       <router-view></router-view>
     </v-content>
+    <notifications group="foo" />
   </v-app>
 </template>
 
@@ -12,9 +13,6 @@
 import Header from "./components/Header/Index";
 export default {
   name: 'App',
-  components: {Header},
-  data: () => ({
-    //
-  }),
+  components: {Header}
 };
 </script>
