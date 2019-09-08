@@ -54,12 +54,15 @@ export default {
     ])
   },
   watch: {
-    currentCity(city) {
-      if (city) {
-        this.getForecastByCityID(city.id)
-          .then((forecast) => {
-            this.forecastList = forecast.list
-          })
+    currentCity: {
+      immediate: true,
+      handler(city) {
+        if (city) {
+          this.getForecastByCityID(city.id)
+            .then((forecast) => {
+              this.forecastList = forecast.list
+            })
+        }
       }
     }
   }
