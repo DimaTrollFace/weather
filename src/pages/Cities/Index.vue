@@ -12,9 +12,13 @@
       <v-col
         v-for="city in cityList"
         :key="city.id"
+        cols="3"
       >
         <city-card
           v-bind="city"
+          @click-more="handlerMore"
+          @click-refresh="handlerRefresh"
+          @click-delete="handlerDelete"
         ></city-card>
       </v-col>
     </v-row>
@@ -25,7 +29,7 @@
 <script>
 import CityAdd from './CityAdd'
 import CityCard from './CityCard'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Cities',
   components: { CityCard, CityAdd },
@@ -37,7 +41,20 @@ export default {
   methods: {
     handlerAddCity () {
       this.$refs.CityAdd.open()
-    }
+    },
+    handlerMore (cityID, cityName) {
+      this.$router.push({ name: 'city', params: { cityID }, query: { cityName } })
+    },
+    handlerRefresh (cityID) {
+      this.refreshCity(cityID)
+    },
+    handlerDelete (cityID) {
+      this.deleteCity(cityID)
+    },
+    ...mapActions([
+      'refreshCity',
+      'deleteCity'
+    ])
   }
 }
 </script>
