@@ -11,13 +11,13 @@ const cityModel = {
   name: '',
   temp: '',
   icon: '',
-  lastUpdate: '',
-  status: ''
+  lastUpdate: ''
 }
 
 export default new Vuex.Store({
   state: {
-    cityList: []
+    cityList: [],
+    currentCity: null
   },
   getters: {
     cityMap (state) {
@@ -31,8 +31,11 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    ADD_NEW_CITY (state, city) {
+    ADD_CITY (state, city) {
       state.cityList.push(city)
+    },
+    SET_CURRENT_CITY (state, city) {
+      state.currentCity = city
     },
     REFRESH_CITY (state, city) {
       state.cityList = state.cityList
@@ -44,15 +47,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setCurrentCity ({ commit }, city) {
+      return Promise
+        .resolve()
+        .then(() => {
+          commit('SET_CURRENT_CITY', city)
+        })
+    },
     prepareCityModel (context, city) {
       return new Promise((resolve, reject) => {
         try {
           resolve(this._vm.setModel(cityModel,
             {
-              temp: city.temp || city.main && city.main.temp,
-              icon: city.icon || city.weather && city.weather[0].icon,
-              lastUpdate: city.lastUpdate,
-              status: city.status,
+              temp: (city.main && city.main.temp) || city.temp,
+              icon: (city.weather && city.weather[0].icon) || city.icon,
+              lastUpdate: new Date(city.lastUpdate),
               ...city
             })
           )
@@ -66,36 +75,73 @@ export default new Vuex.Store({
         .get(`${appUrl}/weather?lat=${lat}&lon=${lon}`)
         .then(response => response.data)
         .catch(err => {
-
+          this._vm.errorMessage(err.message)
+          throw err
         })
     },
     getWeatherByCityID ({ commit }, cityID) {
       return axios
         .get(`${appUrl}/weather?id=${cityID}`)
         .then(response => response.data)
+        .catch(err => {
+          this._vm.errorMessage(err.message)
+          throw err
+        })
     },
     getWeatherByCityName ({ commit }, cityName = 'London') {
       return axios
         .get(`${appUrl}/weather?q=${cityName}`)
         .then(response => response.data)
+        .catch(err => {
+          this._vm.errorMessage(err.message)
+          throw err
+        })
+    },
+    getForecastByCityID (context, cityID) {
+      return axios
+        .get(`${appUrl}/forecast?id=${cityID}`)
+        .then((response) => {
+          return response.data
+        })
+        .catch(err => {
+          this._vm.errorMessage(err.message)
+          throw err
+        })
     },
     addNewCity ({ dispatch, commit }, city) {
+      return Promise
+        .resolve()
+        .then(() => {
+          return dispatch('addCity', { ...city, lastUpdate: new Date() })
+        })
+        .catch(err => {
+          this._vm.errorMessage(err.message)
+          throw err
+        })
+    },
+    addCity ({ commit, getters, dispatch }, city) {
       return Promise
         .resolve()
         .then(() => {
           return dispatch('prepareCityModel', city)
         })
         .then((preparedCityModel) => {
-          commit('ADD_NEW_CITY', preparedCityModel)
+          if (!getters['checkCityID'](preparedCityModel.id)) {
+            commit('ADD_CITY', preparedCityModel)
+          }
         })
     },
     refreshCity ({ dispatch, commit }, cityID) {
       return dispatch('getWeatherByCityID', cityID)
         .then((city) => {
-          return dispatch('prepareCityModel', { city, lastUpdate: new Date() })
+          return dispatch('prepareCityModel', { ...city, lastUpdate: new Date() })
         })
         .then((preparedCityMode) => {
           commit('REFRESH_CITY', preparedCityMode)
+        })
+        .catch(err => {
+          this._vm.errorMessage(err.message)
+          throw err
         })
     },
     deleteCity ({ commit }, cityID) {

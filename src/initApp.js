@@ -1,6 +1,6 @@
 export default function (app) {
   checkCookies(app)
-  checkCurrentUserPosition (app)
+  checkCurrentUserPosition(app)
 
   function checkCookies (app) {
     let citiesFromCookies = app.$cookie.getCookie('cityList')
@@ -17,12 +17,10 @@ export default function (app) {
         const { latitude: lat, longitude: lon } = pos.coords
         app.$store.dispatch('getWeatherByCityCoords', { lat, lon })
           .then((city) => {
-            if (!app.$store.getters['checkCityID'](city.id)) {
-              app.$store.dispatch('addNewCity', { ...city, status: 'current' })
-            }
+            app.$store.dispatch('setCurrentCity', city)
           })
       }, (err) => {
-        // TODO show error
+        app.errorMessage(err.message)
       })
   }
 }
