@@ -4,7 +4,11 @@
     dark
     app
   >
-    <v-toolbar-title>Weather</v-toolbar-title>
+    <v-toolbar-title>
+      <router-link to="/" class="link">
+        Weather
+      </router-link>
+    </v-toolbar-title>
   </v-app-bar>
 </template>
 
@@ -15,5 +19,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .link {
+    text-decoration: none;
+    color: white;
+  }
 </style>
